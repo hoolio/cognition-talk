@@ -30,7 +30,10 @@ cognition-talk/
 │   │   ├── page.tsx               index of outlines
 │   │   └── [slug]/page.tsx        renders content/outlines/<slug>.md
 │   ├── slides/page.tsx            placeholder
-│   └── speaker-notes/page.tsx     placeholder
+│   ├── speaker-notes/page.tsx     placeholder
+│   └── playground/page.tsx        Observable embed POC
+├── components/
+│   └── ObservableEmbed.tsx        runtime-based <ObservableEmbed/> client component
 ├── content/                       markdown source-of-truth
 │   ├── memo/
 │   │   └── industrialization-of-cognition.md
@@ -108,6 +111,58 @@ The intended pipeline:
 
 Pick one of Marp/Reveal.js when the slide work actually begins; do not introduce
 both. Until then `app/slides/page.tsx` is just a placeholder.
+
+## Observable embeds
+
+We embed Observable notebook cells directly into this site via the official
+runtime pattern (no iframes — they look out of place).
+
+- Component: `components/ObservableEmbed.tsx` (client component, dynamically
+  loads `@observablehq/runtime` and the notebook module from
+  `api.observablehq.com` at runtime).
+- POC route: `app/playground/page.tsx` embeds `@d3/disjoint-force-directed-graph`
+  as a smoke test that the wiring works.
+
+### To embed an artifact
+
+1. Author the notebook on https://observablehq.com and publish it as **Public**
+   (or "Unlisted" with a link — both work for embedding).
+2. Copy the slug from its URL — e.g., `@hoolio/seven-factor-matrix`. For
+   unlisted notebooks the slug looks like `d/abc123def456`.
+3. Note the cell names you want to render (visible in the notebook UI).
+4. Drop the component into any page (server or client component is fine — the
+   embed is a client component internally):
+
+   ```tsx
+   import { ObservableEmbed } from '@/components/ObservableEmbed';
+
+   <ObservableEmbed
+     notebook="@hoolio/seven-factor-matrix"
+     cells={['matrix']}
+     version={4}
+     caption="The seven-factor matrix, sortable by column."
+   />
+   ```
+
+### Embedding inside markdown (gotcha)
+
+Markdown content under `content/` is rendered to HTML at build time and
+injected with `dangerouslySetInnerHTML` — there is no React-component slot
+inside that markdown by default. Two options when a memo or outline section
+needs an embed:
+
+- **Hand-author a TSX page** that interleaves markdown chunks with embeds (split
+  the markdown file at the embed point, render each half via `loadDoc`, and
+  drop `<ObservableEmbed/>` between them). Best for one-off integrations.
+- **Add a custom remark plugin** that turns a fenced code block (e.g. `​```observable @hoolio/foo cells=chart​````) into a placeholder, post-process the rendered HTML to inject mount points, and hydrate them client-side. Worth the work
+  only if embeds become frequent.
+
+For now, prefer the first option until embeds become common.
+
+### Versioning
+
+The `version` prop pins the notebook revision (`?v=N` in the api URL). Bump it
+when you intentionally update the upstream notebook so the cache busts.
 
 ## LibreOffice round-trip
 
