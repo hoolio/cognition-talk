@@ -16,6 +16,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Link href="/" className="brand">Cognition Talk</Link>
             <div className="links">
               <Link href="/memo/">Memo</Link>
+              <Link href="/critical-memo/">Critical</Link>
               <Link href="/outlines/">Outlines</Link>
               <Link href="/slides/">Slides</Link>
               <Link href="/speaker-notes/">Notes</Link>

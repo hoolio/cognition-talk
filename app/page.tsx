@@ -14,6 +14,7 @@ export default async function HomePage() {
         <h2>Memo</h2>
         <ul>
           <li><Link href="/memo/">The Industrialization of Cognition (full memo)</Link></li>
+          <li><Link href="/critical-memo/">Critical memo</Link> — sharpened investment-heuristic reading</li>
         </ul>
       </section>
       <section>

@@ -26,6 +26,7 @@ cognition-talk/
 │   ├── page.tsx                   home — links to memo + outlines
 │   ├── globals.css                typography + layout (no Tailwind)
 │   ├── memo/page.tsx              renders content/memo/industrialization-of-cognition.md
+│   ├── critical-memo/page.tsx     renders content/critical-memo/critical-memo.md
 │   ├── outlines/
 │   │   ├── page.tsx               index of outlines
 │   │   └── [slug]/page.tsx        renders content/outlines/<slug>.md
@@ -37,6 +38,8 @@ cognition-talk/
 ├── content/                       markdown source-of-truth
 │   ├── memo/
 │   │   └── industrialization-of-cognition.md
+│   ├── critical-memo/
+│   │   └── critical-memo.md       sharpened investment-heuristic reading
 │   ├── outlines/
 │   │   ├── 30min.md
 │   │   └── full.md

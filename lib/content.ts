@@ -9,7 +9,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeStringify from 'rehype-stringify';
 
-export type Category = 'memo' | 'outlines' | 'slides' | 'speaker-notes';
+export type Category = 'memo' | 'critical-memo' | 'outlines' | 'slides' | 'speaker-notes';
 
 export type DocSummary = {
   slug: string;
