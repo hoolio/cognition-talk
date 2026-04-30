@@ -13,21 +13,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <header className="site-header">
           <nav className="site-nav">
-            <Link href="/" className="brand">Cognition Talk</Link>
+            <Link href="/memo/" className="brand">[working title]</Link>
             <div className="links">
               <Link href="/memo/">Memo</Link>
-              <Link href="/critical-memo/">Critical</Link>
-              <Link href="/outlines/">Outlines</Link>
-              <Link href="/slides/">Slides</Link>
-              <Link href="/speaker-notes/">Notes</Link>
-              <Link href="/playground/">Playground</Link>
             </div>
           </nav>
         </header>
         <main className="site-main">{children}</main>
-        <footer className="site-footer">
-          <p>Source: <a href="https://github.com/hoolio/cognition-talk">github.com/hoolio/cognition-talk</a></p>
-        </footer>
       </body>
     </html>
   );
