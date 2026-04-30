@@ -212,18 +212,48 @@ Caveats:
 
 ## Deployment
 
-`.github/workflows/deploy.yml` builds and publishes on every push to `main`:
+The site is hosted at **https://chopradio.com/cognition-talk/**.
 
-1. Checks out, sets up Node 22, runs `npm ci` and `npm run build`.
-2. `touch out/.nojekyll` — required so GitHub Pages serves files starting with `_`
-   (Next.js puts assets under `_next/`).
-3. Uploads `out/` as a Pages artifact and deploys via `actions/deploy-pages@v4`.
+It is **not** deployed via this repo's GitHub Pages — Pages is disabled on
+`hoolio/cognition-talk` and there is no Actions workflow here. Instead, the
+static export is committed into `hoolio/julio-homepage` (which serves
+chopradio.com) at `cognition-talk/`, and GitHub Pages redeploys that repo.
 
-**One-time setup in GitHub UI:** Settings → Pages → Build and deployment → Source:
-**GitHub Actions**. After that, every push to `main` redeploys.
+The build & cross-repo sync is driven by a launchd LaunchAgent on the Mac mini
+(see `cognition-memo/sync-to-talk.sh` — script lives in the cognition-memo
+repo, not this one). Trigger sequence:
 
-Live URL: https://rafaelmaitra.com/cognition-talk/ (canonical).
-The `hoolio.github.io/cognition-talk/` URL also resolves and 301-redirects here.
+1. Edit `~/projects/cognition-memo/industrialization-of-cognition.md` and save.
+2. LaunchAgent fires (`WatchPaths` event or every 5 min as fallback).
+3. Script copies the markdown into `content/memo/` here, commits, pushes to
+   `cognition-talk` on GitHub.
+4. Script runs `npm run build` here, copies `out/` into
+   `~/homepage/cognition-talk/`, commits, pushes to `julio-homepage`.
+5. GitHub Pages on `julio-homepage` rebuilds; chopradio.com updates within ~1 min.
+
+To force an immediate rebuild & push:
+
+```bash
+bash ~/projects/cognition-memo/sync-to-talk.sh
+```
+
+To watch what the agent is doing:
+
+```bash
+tail -f ~/Library/Logs/cognition-sync.log
+```
+
+If you ever need to hand-rebuild without the script:
+
+```bash
+cd ~/projects/cognition-talk
+npm run build
+touch out/.nojekyll
+rsync -a --delete out/ ~/homepage/cognition-talk/
+cd ~/homepage && git add cognition-talk .nojekyll \
+  && git commit -m "rebuild: sync cognition-talk static export" \
+  && git push
+```
 
 ## Conventions
 
