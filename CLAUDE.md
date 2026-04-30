@@ -73,8 +73,12 @@ npm run build        # builds to out/ (static export)
 ```
 
 Local dev runs without a `basePath`; production builds use `/cognition-talk` because
-the GitHub Pages URL is `https://hoolio.github.io/cognition-talk/`. This branching
-lives in `next.config.mjs` and keys off `NODE_ENV`.
+the deployed site lives at `https://rafaelmaitra.com/cognition-talk/` (the
+`hoolio` GitHub user has a user-level custom domain `rafaelmaitra.com`, so all
+project pages serve from `rafaelmaitra.com/<repo>/` rather than from
+`hoolio.github.io/<repo>/`). The path segment is the same in either case, so
+`basePath: '/cognition-talk'` works for both. This branching lives in
+`next.config.mjs` and keys off `NODE_ENV`.
 
 ### Adding content
 
@@ -160,7 +164,8 @@ Caveats:
 **One-time setup in GitHub UI:** Settings → Pages → Build and deployment → Source:
 **GitHub Actions**. After that, every push to `main` redeploys.
 
-Live URL: https://hoolio.github.io/cognition-talk/
+Live URL: https://rafaelmaitra.com/cognition-talk/ (canonical).
+The `hoolio.github.io/cognition-talk/` URL also resolves and 301-redirects here.
 
 ## Conventions
 

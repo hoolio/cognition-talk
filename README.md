@@ -3,7 +3,8 @@
 Companion site for *The Industrialization of Cognition* — a memo and accompanying
 talk on the AI transition, with implications for capital allocation.
 
-Live: https://hoolio.github.io/cognition-talk/
+Live: https://rafaelmaitra.com/cognition-talk/
+(`hoolio.github.io/cognition-talk/` redirects here.)
 
 ## What's here
 
