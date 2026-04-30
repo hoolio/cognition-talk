@@ -1,0 +1,44 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# testing
+coverage/
+
+# next.js
+.next/
+out/
+next-env.d.ts
+
+# production
+build/
+
+# misc
+.DS_Store
+*.pem
+.vscode/
+.idea/
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# env
+.env*.local
+.env
+
+# typescript
+*.tsbuildinfo
+
+# LibreOffice round-trip artifacts (markdown is source of truth)
+*.odt
+*.docx
+*.odp
+*.pptx
+.lo-edits/
+.~lock.*#
+
+# local Claude Code settings
+.claude/
